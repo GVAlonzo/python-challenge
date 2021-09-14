@@ -60,7 +60,7 @@ with open(csvpath) as csvfile:
     # Specify the file to write to
     output_path = os.path.join("analysis", "PyBankAnalysis.txt")
 
-    # Open the file using "write" mode. Specify the variable to hold the contents
+    # Open the file using "write" mode.
     with open(output_path, 'w') as txtfile:
 
         txtfile.write("               FINANCIAL ANALYSIS               ")
