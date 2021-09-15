@@ -20,7 +20,7 @@ csvpath = os.path.join('Resources',"budget_data.csv")
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
 
-    # Store the header, per the Rubric, will not use in the summaries
+    # Store the header, per the Rubric, but not used
     csv_header = next(csvreader)
 
     # Create and initialize variables for summary output
@@ -30,6 +30,12 @@ with open(csvpath) as csvfile:
     max_inc = 0
     max_dec = 0
 
+    #------------------------------------------------------
+    #-- Main logic to loop through each row in csv
+    #--        - Count rows
+    #--        - Gather overall profit/losses
+    #--        - Capture greatest increase & decreases
+    #------------------------------------------------------
     for row in csvreader:
         row_counter += 1
         profit_losses = int(row[1])
@@ -45,15 +51,26 @@ with open(csvpath) as csvfile:
             max_dec = profit_losses
             max_dec_month = row[0]
 
-    # Print analysis output to the terminal
+    #------------------------------------------------------
+    #-- Print logic for display on terminal and text file
+    #------------------------------------------------------
+
+    # Final Calculation & Format for $ in preparation for printing
+    avg_change = round(tot_profit_losses / row_counter,2)
+    formatted_tot_profit_losses = "${:.0f}".format(tot_profit_losses)
+    formatted_avg_change = "${:.2f}".format(avg_change)
+    formatted_max_inc = "${:.0f}".format(max_inc)
+    formatted_max_dec = "${:.0f}".format(max_dec)
+
+    # Print analysis to the terminal
+
     print("               FINANCIAL ANALYSIS               ")
     print("------------------------------------------------")
     print(f'                Total Months: {row_counter}')
-    print(f'                       Total: ${tot_profit_losses}')
-    avg_change = tot_profit_losses / row_counter
-    print(f'              Average Change: ${avg_change}')
-    print(f'Greatest Increase in Profits: {max_inc_month} (${max_inc})')
-    print(f'Greatest Decrease in Profits: {max_dec_month} (${max_dec})')
+    print(f'                       Total: {formatted_tot_profit_losses}')
+    print(f'              Average Change: {formatted_avg_change}')
+    print(f'Greatest Increase in Profits: {max_inc_month} ({formatted_max_inc})')
+    print(f'Greatest Decrease in Profits: {max_dec_month} ({formatted_max_dec})')
 
     # Print analysis output to a text file in the analysis folder
 
@@ -66,10 +83,10 @@ with open(csvpath) as csvfile:
         txtfile.write("               FINANCIAL ANALYSIS               ")
         txtfile.write('\n'"------------------------------------------------")
         txtfile.write('\n'f'                Total Months: {row_counter}')
-        txtfile.write('\n'f'                       Total: ${tot_profit_losses}')
-        txtfile.write('\n'f'              Average Change: ${avg_change}')
-        txtfile.write('\n'f'Greatest Increase in Profits: {max_inc_month} (${max_inc})')
-        txtfile.write('\n'f'Greatest Decrease in Profits: {max_dec_month} (${max_dec})')
+        txtfile.write('\n'f'                       Total: {formatted_tot_profit_losses}')
+        txtfile.write('\n'f'              Average Change: {formatted_avg_change}')
+        txtfile.write('\n'f'Greatest Increase in Profits: {max_inc_month} ({formatted_max_inc})')
+        txtfile.write('\n'f'Greatest Decrease in Profits: {max_dec_month} ({formatted_max_dec})')
 
 
 
